@@ -41,8 +41,8 @@ The Marketplace is developed in Solidity, utilizing:
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/Kingsmen-hackers/match-contracts-starknet
-   cd match-contracts-starknet
+   git clone https://github.com/Kingsmen-hackers/match_starknet_contracts
+   cd match_starknet_contracts
    ```
 
 2. **Install dependencies**:

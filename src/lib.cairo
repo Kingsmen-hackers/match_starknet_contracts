@@ -93,6 +93,18 @@ pub trait IMatchStarknetContract<TContractState> { /// Create User
         _longitude: felt252,
         _account_type: AccountType,
     );
+    /// Get user
+    fn user(self: @TContractState, user: ContractAddress) -> User;
+    /// Get user by id
+    fn users_by_id(self: @TContractState, user_id: u256) -> User;
+    /// Get balance of user strk in contract
+    fn balance_of_strk(self: @TContractState, user: ContractAddress) -> u256;
+    /// Get balance of user usdc in contract
+    fn balance_of_usdc(self: @TContractState, user: ContractAddress) -> u256;
+    /// Get user stores
+    fn user_stores(self: @TContractState, user: ContractAddress) -> Array<Store>;
+    /// Get user stores id
+    fn user_store_ids(self: @TContractState, user: ContractAddress) -> Array<u256>;
     /// Update User
     fn update_user(
         ref self: TContractState,
@@ -202,6 +214,7 @@ mod MatchStarknetContract {
         stores: Map<u256, Store>,
         requests: Map<u256, Request>,
         user_store_ids: Map<ContractAddress, Vec<u256>>,
+        user_request_ids: Map<ContractAddress, Vec<u256>>,
         offers: Map<u256, Offer>,
         request_payment_info: Map<u256, PaymentInfo>,
         balance_of_usdc: Map<ContractAddress, u256>,
@@ -467,6 +480,41 @@ mod MatchStarknetContract {
                     },
                 );
         }
+
+        fn user(self: @ContractState, user: ContractAddress) -> User {
+            self.users.entry(user).read()
+        }
+        fn users_by_id(self: @ContractState, user_id: u256) -> User {
+            self.users_by_id.entry(user_id).read()
+        }
+
+        fn balance_of_strk(self: @ContractState, user: ContractAddress) -> u256 {
+            self.balance_of_strk.entry(user).read()
+        }
+        fn balance_of_usdc(self: @ContractState, user: ContractAddress) -> u256 {
+            self.balance_of_usdc.entry(user).read()
+        }
+
+        fn user_stores(self: @ContractState, user: ContractAddress) -> Array<Store> {
+            let store_ids = self.user_store_ids.entry(user).clone(); // Vec<u256>
+
+            let mut stores: Array<Store> = ArrayTrait::new();
+            // let stores_number = store_ids.len();
+            // for i in 0..stores_number.into() {// let store_id = store_ids.get(i);
+            // // let store = self.stores.entry(store_id);
+            // // stores.append().write(store.read());
+            // }
+            // for store_id in store_ids {
+            //     let store = self.stores.entry(store_id);
+            //     stores.append().write(store.read());
+            // }
+            stores
+        }
+        fn user_store_ids(self: @ContractState, user: ContractAddress) -> Array<u256> {
+            let mut stores_id: Array<u256> = ArrayTrait::new();
+            stores_id
+        }
+
         fn update_user(
             ref self: ContractState,
             _username: ByteArray,

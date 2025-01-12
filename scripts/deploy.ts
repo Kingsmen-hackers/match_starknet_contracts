@@ -28,7 +28,9 @@ async function main() {
     ({
       sierraCode: sierraCodeLifeSourceManager,
       casmCode: casmCodLifeSourceManager,
-    } = await getCompiledCode("match_starknet_contracts_LifeSourceManager"));
+    } = await getCompiledCode(
+      "match_starknet_contracts_MatchStarknetContract"
+    ));
   } catch (error: any) {
     console.log("Failed to read contract files");
     console.log(error);
